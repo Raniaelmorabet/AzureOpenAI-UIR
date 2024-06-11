@@ -6,7 +6,7 @@ import { ClipLoader } from "react-spinners";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { BsStopCircle } from "react-icons/bs";
-import { TypeAnimation } from "react-type-animation"; // Import TypeAnimation component
+import { TypeAnimation } from "react-type-animation";
 
 const Main = () => {
     const [question, setQuestion] = useState('');
@@ -19,6 +19,7 @@ const Main = () => {
     const [loadingAnim, setLoadingAnim] = useState(false);
     const [generatingResponse, setGeneratingResponse] = useState(false);
     const [typedResponse, setTypedResponse] = useState('');
+    const [cardLoading, setCardLoading] = useState(false);
     const typingTimeoutRef = useRef(null);
 
     const conversationEndRef = useRef(null);
@@ -73,7 +74,7 @@ const Main = () => {
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
 
-            const res = await fetch('http://localhost:5169/api/OpenAI', {
+            const res = await fetch('http://localhost:5182/api/OpenAI', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -110,17 +111,18 @@ const Main = () => {
             typingTimeoutRef.current = null;
         }
         setGeneratingResponse(false);
-        setTypedResponse(prevTypedResponse => prevTypedResponse); // Maintain the current typed response
+        setTypedResponse(prevTypedResponse => prevTypedResponse);
     };
-
     const handleCardClick = async (card) => {
+        setCardLoading(true);
         await fetchResponse(card);
+        setCardLoading(false);
     };
-
     return (
         <div className="main">
             <div className='nav flex items-center'>
                 <p>AzureOpenAI</p>
+                {/*<img src={assets.Azure} className='Logo'/>*/}
                 <button className='image-button' onClick={() => handleButtonClick('User Icon clicked')}>
                 </button>
                 <img src={assets.user_icon}/>
@@ -175,27 +177,18 @@ const Main = () => {
                                 type="submit"
                                 disabled={generatingResponse}
                             >
-                                {loading && !generatingResponse && <ClipLoader color="#c770f0" />}
                                 {generatingResponse ? (
-                                    <button className='stop-btn'>
-                                        <BsStopCircle
-                                            size={25}
-                                            color="red"
-                                            onClick={handleStopResponse}
-                                        />
-                                    </button>
-
+                                    <ClipLoader color="#0000ff6b" size={30} />
                                 ) : (
-                                    question.trim() === ''
-                                        ? <img src={assets.send_icon} alt='Send Icon' />
-                                        : "Send"
+                                    <img src={assets.send_icon} alt='Send Icon' />
                                 )}
                             </button>
                         </div>
                     </form>
 
                     <p className='bottom-info text-gray-500 mt-4'>
-                        The information provided here is exclusive to UIR and is intended solely for its use. Unauthorized use, or distribution is strictly prohibited.                    </p>
+                        The information provided here is exclusive to UIR and is intended solely for its use. Unauthorized use, or distribution is strictly prohibited.
+                    </p>
                 </div>
             </div>
         </div>

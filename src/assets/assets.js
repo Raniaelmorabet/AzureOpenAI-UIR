@@ -16,6 +16,7 @@ import send_icon from './send_icon.png'
 import Carousel2 from './Carousel2.jpeg'
 import Carousel3 from './Carousel3.jpeg'
 import Carousel4 from './Carousel4.jpeg'
+import Azure from './Azure.png'
 
 export const assets = {
     history_icon,
@@ -35,5 +36,6 @@ export const assets = {
     Carousel1,
     Carousel2,
     Carousel3,
-    Carousel4
+    Carousel4,
+    Azure
 }

@@ -6,7 +6,7 @@ import { MdDeleteOutline } from "react-icons/md";
 // import { MdHistory } from "react-icons/md";
 
 const Sidebar = () => {
-    const port = `http://localhost:5169/api/Conversations`
+    const port = `http://localhost:5182/api/Conversations`
     const [extended, setExtended] = useState(false);
     const [conversations, setConversations] = useState([]);
     const [responses, setResponses] = useState([]);
@@ -28,7 +28,7 @@ const Sidebar = () => {
 
     const fetchResponses = async () => {
         try {
-            const response = await fetch('http://localhost:5169//api/Responses');
+            const response = await fetch('http://localhost:5182/api/Responses');
             const data = await response.json();
             setResponses(data?.$values || []);
         } catch (error) {

@@ -1,0 +1,213 @@
+/* Main container */
+.main {
+    flex: 1;
+    min-height: 100vh;
+    padding-bottom: 15vh;
+    position: relative;
+}
+
+/* Navigation */
+.main .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 22px;
+    padding: 20px;
+    color: #585858;
+}
+
+.main .nav img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+/* Main container styling */
+.main-container {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Greeting section */
+.main .greet {
+    margin: 40px 0px;
+    font-size: 56px;
+    color: #c4c7c5;
+    font-weight: 500;
+    padding: 20px;
+    line-height: 1.2;
+}
+
+.main .greet span {
+    background: -webkit-linear-gradient(16deg, blue, green);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Cards grid */
+.main .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.main .card {
+    height: 200px;
+    padding: 15px;
+    background-color: #f0f4f9;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.main .card img {
+    width: 35px;
+    padding: 5px;
+    position: absolute;
+    background: -webkit-linear-gradient(16deg, #00800042, #0000ff3d);
+    border-radius: 20px;
+    bottom: 10px;
+    right: 10px;
+}
+
+.main .card p {
+    color: #585858;
+    font-size: 17px;
+}
+
+.main .card:hover {
+    background-color: #dfe4ea;
+}
+
+/* Bottom section */
+.main-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 900px;
+    padding: 0px 20px;
+    margin: auto;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #f0f4f9;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.search-box img {
+    width: 24px;
+    cursor: pointer;
+}
+
+.search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 18px;
+}
+
+.search-box div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.main .bottom-info {
+    font-size: 13px;
+    margin: 15px auto;
+    text-align: center;
+    font-weight: 300;
+}
+
+.image-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.image-button img {
+    display: block;
+}
+
+.question-title {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: -18px 0px;
+    flex-direction: row-reverse;
+}
+
+.response-data {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 33px;
+    flex-direction: row;
+}
+
+.result img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.response-para {
+    margin-top: 8px;
+}
+
+.response-image {
+    font-size: 30px;
+    border-radius: 50px;
+}
+
+.response-data p {
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.question-title p {
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+code {
+    background-color: rgba(0, 0, 0, 0.18);
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.question-title p {
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.question-title p span {
+    font-weight: normal;
+}
+
+.response-data span p {
+    font-weight: normal;
+}
+
+.response-data p {
+    font-weight: 600;
+}
+
+.stop-btn {
+    border: none;
+    background: none;
+}
+
+/* Added overflow for conversation */
+.main .conversation {
+    max-height: 750px;
+    overflow-y: auto;
+    padding: 10px;
+    /* Adjust padding if needed */
+}

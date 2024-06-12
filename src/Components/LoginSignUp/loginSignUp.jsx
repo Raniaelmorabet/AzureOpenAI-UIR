@@ -1,11 +1,11 @@
-import React, {useState} from "react"
-import "./LoginSignUp.css"
-import {assets} from "../../assets/assets.js";
+import React, { useState } from "react";
+import "./LoginSignUp.css";
+import { assets } from "../../assets/assets.js";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const LoginSignUp=()=> {
 
-    const [action, setAction] =useState("Sign Up");
+const LoginSignUp = () => {
+    const [action, setAction] = useState("Login");
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -29,7 +29,6 @@ const LoginSignUp=()=> {
         try {
             const result = await axios.post(url, null, { params });
             console.log(params);
-            alert(`Success: ${result.data}`);
             const userId = result.data.id;
 
             navigate('/', { state: { userId } });
@@ -44,9 +43,9 @@ const LoginSignUp=()=> {
         }
     };
 
-    return(
+    return (
         <>
-            <img src={assets.Uirback} className='back-img'/>
+            <img src={assets.Uirback} className='back-img' />
             <div className='Main-container'>
                 <div className='Login-container'>
                     <div className='header'>
@@ -54,9 +53,9 @@ const LoginSignUp=()=> {
                         <div className='underline'></div>
                     </div>
                     <div className='inputs'>
-                        {action === "Login" ? <div></div> :
+                        {action === "Sign Up" && (
                             <div className='input'>
-                                <img src={assets.person} alt='person'/>
+                                <img src={assets.person} alt='person' />
                                 <input
                                     className='focus:outline-none focus:ring-transparent'
                                     type="text"
@@ -65,9 +64,9 @@ const LoginSignUp=()=> {
                                     onChange={handleNameChange}
                                 />
                             </div>
-                        }
+                        )}
                         <div className='input'>
-                            <img src={assets.email} alt='email'/>
+                            <img src={assets.email} alt='email' />
                             <input
                                 className='focus:outline-none focus:ring-transparent'
                                 type="text"
@@ -77,7 +76,7 @@ const LoginSignUp=()=> {
                             />
                         </div>
                         <div className='input'>
-                            <img src={assets.password} alt='password'/>
+                            <img src={assets.password} alt='password' />
                             <input
                                 className='focus:outline-none focus:ring-transparent'
                                 type="password"
@@ -88,11 +87,11 @@ const LoginSignUp=()=> {
                         </div>
                     </div>
                     <div className='submit-container'>
-                        <div className={action === "Login" ? "Submit gray" : "submit"} onClick={() => {
+                        <div className={action === "Sign Up" ? "Submit gray" : "submit"} onClick={() => {
                             setAction("Sign Up")
                         }}>Sign Up
                         </div>
-                        <div className={action === "Sign Up" ? "Submit gray" : "submit"} onClick={async () => {
+                        <div className={action === "Login" ? "Submit gray" : "submit"} onClick={async () => {
                             if (action === "Login") {
                                 await handleLogin();
                             } else {
@@ -100,16 +99,11 @@ const LoginSignUp=()=> {
                             }
                         }}>Login
                         </div>
-                        {/* <div className={action === "Sign Up" ? "Submit gray" : "submit"} onClick={() => {
-                            setAction("Login")
-                        }}>Login
-                        </div> */}
                     </div>
-                    {/* <button onClick={handleLogin}>Login</button> */}
                 </div>
             </div>
         </>
-
     );
 }
-export default LoginSignUp
+
+export default LoginSignUp;

@@ -9,6 +9,7 @@ import remarkGfm from 'remark-gfm';
 import { BsStopCircle } from "react-icons/bs";
 import { TypeAnimation } from "react-type-animation";
 import { FaSignInAlt } from "react-icons/fa";
+import {Link} from "react-router-dom";
 
 const Main = () => {
     const [question, setQuestion] = useState('');
@@ -147,9 +148,12 @@ const Main = () => {
                 </button>
                 {isDropdownVisible && (
                     <div className={`drop absolute top-16 mr-8 right-0 bg-white shadow-lg rounded-md z-10`}>
-                        <ul className="list-none p-0 px-2 m-0 flex hover:bg-gray-200 hover:rounded-md ">
-                            <FaSignInAlt  size={17} className='mt-[14px] text-[#183680]'/><button className="p-2 cursor-pointer text-lg text-[#183680]">Sign In</button>
-                        </ul>
+                        <Link to='/LoginSignup'>
+                            <ul className="list-none p-0 px-2 m-0 flex hover:bg-gray-200 hover:rounded-md ">
+                                <FaSignInAlt size={17} className='mt-[14px] text-[#183680]'/>
+                                <button className="p-2 cursor-pointer text-lg text-[#183680]">Sign In</button>
+                            </ul>
+                        </Link>
                     </div>
                 )}
             </div>

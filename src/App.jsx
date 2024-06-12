@@ -4,13 +4,27 @@ import Sidebar from "./Components/Sidebar/Sidebar.jsx";
 import LoginSignUp from "./Components/LoginSignUp/loginSignUp.jsx";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
+function AppContent(){
+    const location = useLocation();
+
+    return (
+        <>
+            {location.pathname !== '/LoginSignup' && <Sidebar/>}
+            <Routes>
+                <Route path='/' element={<Main />} />
+                <Route path='/LoginSignup' element={<LoginSignUp/>}  />
+            </Routes>
+
+        </>
+    )
+}
 const App=()=> {
 
   return (
     <>
-      <Sidebar />
-      <Main />
-      {/*<LoginSignUp/>*/}
+        <Router>
+        <AppContent/>
+        </Router>
     </>
   )
 }

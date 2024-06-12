@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { BsStopCircle } from "react-icons/bs";
 import { TypeAnimation } from "react-type-animation";
+import { FaSignInAlt } from "react-icons/fa";
 
 const Main = () => {
     const [question, setQuestion] = useState('');
@@ -145,9 +146,9 @@ const Main = () => {
                     <img src={assets.user_icon} alt="User Icon" className="h-10 w-10"/>
                 </button>
                 {isDropdownVisible && (
-                    <div className={`drop absolute top-16 mr-8 right-0 bg-white shadow-md rounded-md z-10`}>
-                        <ul className="list-none p-0 m-0">
-                            <li className="p-2 hover:bg-gray-200 hover:rounded-md cursor-pointer text-[#183680]">Sign In</li>
+                    <div className={`drop absolute top-16 mr-8 right-0 bg-white shadow-lg rounded-md z-10`}>
+                        <ul className="list-none p-0 px-2 m-0 flex hover:bg-gray-200 hover:rounded-md ">
+                            <FaSignInAlt  size={17} className='mt-[14px] text-[#183680]'/><button className="p-2 cursor-pointer text-lg text-[#183680]">Sign In</button>
                         </ul>
                     </div>
                 )}
@@ -189,11 +190,11 @@ const Main = () => {
                         </div>
                     }
 
-                    <form onSubmit={handleFormSubmit} className='search-box flex items-center space-x-2'>
+                    <form onSubmit={handleFormSubmit} className='search-box flex items-center space-x-2 '>
                         <input
                             type="text"
                             id="question"
-                            className='border border-gray-300 rounded-md px-4 py-2 w-full'
+                            className='border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:ring-transparent'
                             placeholder="Enter your question"
                             value={question}
                             onChange={handleInputChange}

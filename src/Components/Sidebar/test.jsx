@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
 import { assets } from "../../assets/assets.js";
 import { RiMenuFold2Line, RiMenuUnfold2Line } from "react-icons/ri";
-import { MdDeleteOutline } from "react-icons/md";
-import { MdHistory } from "react-icons/md";
+// import { MdDeleteOutline } from "react-icons/md";
+// import { MdHistory } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-    const port = `http://localhost:5182/api/Conversations`;
-    const [extended, setExtended] = useState(false);
+    const port = 'http://localhost:5182/api/Conversations';
+        const [extended, setExtended] = useState(false);
     const [conversations, setConversations] = useState([]);
 
     //new--
@@ -22,7 +22,7 @@ const Sidebar = () => {
         if (!userId) {
             navigate("/");
         } else {
-            fetch(`http://localhost:5182/Conversation/IdUser/${userId}`)
+            fetch(ù)
                 .then((response) => response.json())
                 .then((data) => {
                     setConversations(data["$values"]);
@@ -35,6 +35,7 @@ const Sidebar = () => {
 
     //new
     const handleLogout = () => {
+        // Clear session or token here
         navigate("/");
     };
 
@@ -44,22 +45,7 @@ const Sidebar = () => {
         return text.split(" ").slice(0, 5).join(" ");
     };
 
-    // const deleteConversation = async (id) => {
-    //     if (window.confirm('Are you sure you want to delete this conversation?')) {
-    //         try {
-    //             const response = await fetch(`${port}/${id}`, {
-    //                 method: 'DELETE',
-    //             });
-    //             if (response.ok) {
-    //                 fetchConversations();
-    //             } else {
-    //                 console.error('Failed to delete conversation:', response.statusText);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error deleting conversation:', error);
-    //         }
-    //     }
-    // };
+
 
     const handleNewChat = () => {
         window.location.reload();
@@ -84,14 +70,18 @@ const Sidebar = () => {
                 </div>
                 {extended ? (
                     <div className="recent">
+                        {<p className='recent-title'><MdHistory className='history-icon'/>Recent history</p>}
                         <p className="recent-title">Recent history</p>
                         <div className="recent-entry">
                             <ul>
                                 <div id="data-container">
                                     {conversations.map((conversation) =>
                                         conversation.questions["$values"].map((question) => (
-                                            <div key={question.questionContent} className='text-white/80 flex '>
-                                                <h2>{truncateText(question.questionContent)}</h2>
+                                            <div key={question.questionContent}>
+                                                <h2>Question Content: {question.questionContent}</h2>
+                                                <p>
+                                                    Message: {question.responses["$values"][0].message}
+                                                </p>
                                             </div>
                                         ))
                                     )}

@@ -194,7 +194,7 @@ const Main = () => {
                         </div>
                     }
 
-                    <form onSubmit={handleFormSubmit} className='search-box flex items-center space-x-2 '>
+                    <form onSubmit={handleFormSubmit} className='search-box flex items-center space-x-2'>
                         <input
                             type="text"
                             id="question"

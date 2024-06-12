@@ -22,8 +22,9 @@ const Main = () => {
     const [typedResponse, setTypedResponse] = useState('');
     const [cardLoading, setCardLoading] = useState(false);
     const typingTimeoutRef = useRef(null);
-
     const conversationEndRef = useRef(null);
+
+    // Function responsible for chat scrolling
     const scrollToBottom = () => {
         if (conversationEndRef.current) {
             conversationEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -38,6 +39,7 @@ const Main = () => {
         setQuestion(e.target.value);
     };
 
+    // function responsible if the question is empty it will declare an alert else it will fetch the response
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
@@ -53,6 +55,7 @@ const Main = () => {
         await fetchResponse(question);
     };
 
+    // function responsible fot the typeEffect of the responses
     const typeText = (text) => {
         setTypedResponse('');
         let i = 0;
@@ -70,6 +73,7 @@ const Main = () => {
         type();
     };
 
+    // function responsible for the fetching Logic of the responses
     const fetchResponse = async (question) => {
         try {
             await new Promise((resolve) => setTimeout(resolve, 500));
@@ -104,6 +108,8 @@ const Main = () => {
             setLoading(false);
         }
     };
+
+    // function responsible for stopping the response
     const handleStopResponse = () => {
         if (typingTimeoutRef.current) {
             clearTimeout(typingTimeoutRef.current);
@@ -112,6 +118,8 @@ const Main = () => {
         setGeneratingResponse(false);
         setTypedResponse(prevTypedResponse => prevTypedResponse);
     };
+
+    // function responsible for the loader in the cards whenever they are clicked
     const handleCardClick = async (card) => {
         setCardLoading(true);
 
@@ -123,6 +131,7 @@ const Main = () => {
             setCardLoading(false);
         }
     };
+    // function responsible for the dropdown of the user Icon
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     const handleButtonClick = () => {

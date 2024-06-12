@@ -16,6 +16,7 @@ const Sidebar = () => {
         fetchResponses();
     }, []);
 
+    // Function responsible for fetching the Conversation
     const fetchConversations = async () => {
         try {
             const response = await fetch(port);
@@ -25,7 +26,7 @@ const Sidebar = () => {
             console.error('Error fetching conversations:', error);
         }
     };
-
+    // Function responsible for fetching the Responses
     const fetchResponses = async () => {
         try {
             const response = await fetch('http://localhost:5182/api/Responses');
@@ -36,11 +37,13 @@ const Sidebar = () => {
         }
     };
 
+    // Function responsible for if the text was too long it will show just a small part
     const truncateText = (text) => {
         if (!text) return '';
         return text.split(' ').slice(0, 5).join(' ');
     };
 
+    // function responsible for deleting the History
     const deleteConversation = async (id) => {
         if (window.confirm('Are you sure you want to delete this conversation?')) {
             try {
@@ -58,6 +61,7 @@ const Sidebar = () => {
         }
     };
 
+    // function responsible for starting a new chat
     const handleNewChat = () => {
         window.location.reload();
     };

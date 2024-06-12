@@ -1,14 +1,16 @@
 import React from "react";
 import Main from "./Components/Main/Main.jsx";
 import Sidebar from "./Components/Sidebar/Sidebar.jsx";
+import LoginSignUp from "./Components/LoginSignUp/loginSignUp.jsx";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
-import Carousel from "./Components/Carousel/Carousel.jsx";
 const App=()=> {
 
   return (
     <>
       <Sidebar />
       <Main />
+      {/*<LoginSignUp/>*/}
     </>
   )
 }

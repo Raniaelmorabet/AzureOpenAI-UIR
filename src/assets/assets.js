@@ -17,6 +17,10 @@ import Carousel2 from './Carousel2.jpeg'
 import Carousel3 from './Carousel3.jpeg'
 import Carousel4 from './Carousel4.jpeg'
 import Azure from './Azure.png'
+import email from './email.png'
+import password from './password.png'
+import person from './person.png'
+import Uirback from './Uirback.jpeg'
 
 export const assets = {
     history_icon,
@@ -37,5 +41,9 @@ export const assets = {
     Carousel2,
     Carousel3,
     Carousel4,
-    Azure
+    Azure,
+    email,
+    password,
+    person,
+    Uirback
 }

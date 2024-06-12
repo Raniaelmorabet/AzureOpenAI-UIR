@@ -1,4 +1,3 @@
-/* Main container */
 .main {
     flex: 1;
     min-height: 100vh;
@@ -6,7 +5,6 @@
     position: relative;
 }
 
-/* Navigation */
 .main .nav {
     display: flex;
     align-items: center;
@@ -21,13 +19,11 @@
     border-radius: 50%;
 }
 
-/* Main container styling */
 .main-container {
     max-width: 900px;
     margin: auto;
 }
 
-/* Greeting section */
 .main .greet {
     margin: 40px 0px;
     font-size: 56px;
@@ -38,19 +34,22 @@
 }
 
 .main .greet span {
-    background: -webkit-linear-gradient(16deg, blue, green);
+    background: -webkit-linear-gradient(16deg, blue, #D1D901);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Cards grid */
 .main .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
     padding: 20px;
 }
-
+.card-loader {
+    position: absolute;
+    bottom: 0;
+    left: -270px;
+}
 .main .card {
     height: 200px;
     padding: 15px;
@@ -64,7 +63,7 @@
     width: 35px;
     padding: 5px;
     position: absolute;
-    background: -webkit-linear-gradient(16deg, #00800042, #0000ff3d);
+    background: -webkit-linear-gradient(16deg, rgba(209, 217, 1, 0.29), #0000ff4f);
     border-radius: 20px;
     bottom: 10px;
     right: 10px;
@@ -79,7 +78,6 @@
     background-color: #dfe4ea;
 }
 
-/* Bottom section */
 .main-bottom {
     position: absolute;
     bottom: 0;
@@ -146,10 +144,13 @@
 
 .response-data {
     display: flex;
-    align-items: center;
     gap: 20px;
     margin-bottom: 33px;
     flex-direction: row;
+}
+.response-data img {
+    height: 40px;
+    margin-top: 3px;
 }
 
 .result img {
@@ -203,11 +204,11 @@ code {
     border: none;
     background: none;
 }
-
-/* Added overflow for conversation */
 .main .conversation {
     max-height: 750px;
     overflow-y: auto;
     padding: 10px;
-    /* Adjust padding if needed */
+}
+.drop::after{
+    background-color: red;
 }

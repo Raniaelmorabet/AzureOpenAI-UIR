@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import "./Main.css";
 import Carousel from "../Carousel/Carousel.jsx";
 import { assets } from "../../assets/assets.js";
@@ -23,7 +24,6 @@ const Main = () => {
     const typingTimeoutRef = useRef(null);
 
     const conversationEndRef = useRef(null);
-
     const scrollToBottom = () => {
         if (conversationEndRef.current) {
             conversationEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -104,7 +104,6 @@ const Main = () => {
             setLoading(false);
         }
     };
-
     const handleStopResponse = () => {
         if (typingTimeoutRef.current) {
             clearTimeout(typingTimeoutRef.current);
@@ -115,17 +114,34 @@ const Main = () => {
     };
     const handleCardClick = async (card) => {
         setCardLoading(true);
-        await fetchResponse(card);
-        setCardLoading(false);
+
+        try {
+            await fetchResponse(card);
+        } catch (error) {
+            console.error('Error fetching response:', error);
+        } finally {
+            setCardLoading(false);
+        }
     };
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+    const handleButtonClick = () => {
+        setIsDropdownVisible(!isDropdownVisible);
+    }
     return (
         <div className="main">
-            <div className='nav flex items-center'>
+            <div className="nav flex items-center relative">
                 <p>AzureOpenAI</p>
-                {/*<img src={assets.Azure} className='Logo'/>*/}
-                <button className='image-button' onClick={() => handleButtonClick('User Icon clicked')}>
+                <button className="ml-4" onClick={() => handleButtonClick()}>
+                    <img src={assets.user_icon} alt="User Icon" className="h-10 w-10"/>
                 </button>
-                <img src={assets.user_icon}/>
+                {isDropdownVisible && (
+                    <div className={`drop absolute top-16 mr-8 right-0 bg-white shadow-md rounded-md z-10`}>
+                        <ul className="list-none p-0 m-0">
+                            <li className="p-2 hover:bg-gray-200 hover:rounded-md cursor-pointer text-[#183680]">Sign In</li>
+                        </ul>
+                    </div>
+                )}
             </div>
 
             <div className="main-container">
@@ -138,7 +154,7 @@ const Main = () => {
                             <p>How can I Assist you today?</p>
                         </div>
                         {error && <p className='error text-red-500'>{error}</p>}
-                        {showCarousel && <Carousel handleCardClick={handleCardClick}/>}
+                        {showCarousel && <Carousel handleCardClick={handleCardClick} cardLoading={cardLoading}/>}
                     </>
                 ) : null}
 
@@ -148,16 +164,19 @@ const Main = () => {
                             {conversationHistory.map((convo, index) => (
                                 <div key={index} className='conversation-entry flex flex-col space-y-2'>
                                     <div className='question-title flex items-center space-x-2'>
-                                        <img className='question-img w-10' src={assets.user_icon} alt='User Icon' />
+                                        <img className='question-img w-10' src={assets.user_icon} alt='User Icon'/>
                                         <p>You <br/><span>{convo.question}</span></p>
                                     </div>
-                                    <div className='response-data flex items-center space-x-2'>
-                                        <img src={assets.uir_icon} width={40} className='response-image' alt='Response Icon' />
-                                        <p>AzureOpenAI <span><ReactMarkdown remarkPlugins={[remarkGfm]}>{index === conversationHistory.length - 1 && generatingResponse ? typedResponse : convo.response}</ReactMarkdown></span></p>
+                                    <div className='response-data space-x-2'>
+                                        <img src={assets.uir_icon} width={40} className='response-image'
+                                             alt='Response Icon'/>
+                                        <p>AzureOpenAI <span><ReactMarkdown
+                                            remarkPlugins={[remarkGfm]}>{index === conversationHistory.length - 1 && generatingResponse ? typedResponse : convo.response}</ReactMarkdown></span>
+                                        </p>
                                     </div>
                                 </div>
                             ))}
-                            <div ref={conversationEndRef} />
+                            <div ref={conversationEndRef}/>
                         </div>
                     }
 
@@ -178,21 +197,22 @@ const Main = () => {
                                 disabled={generatingResponse}
                             >
                                 {generatingResponse ? (
-                                    <ClipLoader color="#0000ff6b" size={30} />
+                                    <ClipLoader color="#183680" size={30}/>
                                 ) : (
-                                    <img src={assets.send_icon} alt='Send Icon' />
+                                    <img src={assets.send_icon} alt='Send Icon'/>
                                 )}
                             </button>
                         </div>
                     </form>
 
                     <p className='bottom-info text-gray-500 mt-4'>
-                        The information provided here is exclusive to UIR and is intended solely for its use. Unauthorized use, or distribution is strictly prohibited.
+                        The information provided here is exclusive to UIR and is intended solely for its use.
+                        Unauthorized use, or distribution is strictly prohibited.
                     </p>
                 </div>
             </div>
         </div>
     );
-};
+    };
 
-export default Main;
+    export default Main;

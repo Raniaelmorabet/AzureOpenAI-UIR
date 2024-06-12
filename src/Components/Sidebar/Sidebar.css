@@ -2,7 +2,7 @@
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    background: -webkit-linear-gradient(16deg, #00800091, #0000ff6b);
+    background: -webkit-linear-gradient(20deg, rgba(209, 217, 1, 0.47), rgba(0, 0, 255, 0.64));
     padding: 25px 15px;
 }
 .message-icon,
@@ -85,5 +85,5 @@ li {
 
 }
 .history-icon {
-    font-size: 21px;
+    font-size: 20px;
 }

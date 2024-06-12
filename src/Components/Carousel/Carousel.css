@@ -99,3 +99,15 @@
     margin-top: -158px;
     margin-left: -105px;
 }
+.cards {
+    position: relative;
+}
+.Loader-carousel {
+     margin-left: 700px;
+     position: absolute;
+     top: 100px;
+}
+.card-loader {
+    position: absolute;
+    rig: 500px;
+}

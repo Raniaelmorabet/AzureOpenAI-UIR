@@ -3,7 +3,7 @@ import './Sidebar.css';
 import { assets } from '../../assets/assets.js';
 import { RiMenuFold2Line, RiMenuUnfold2Line } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
-// import { MdHistory } from "react-icons/md";
+import { MdHistory } from "react-icons/md";
 
 const Sidebar = () => {
     const port = `http://localhost:5182/api/Conversations`
@@ -77,14 +77,14 @@ const Sidebar = () => {
                 </div>
                 {extended ?
                     <div className='recent'>
-                        <p className='recent-title'>Recent</p>
+                        {/*<p className='recent-title'><MdHistory className='history-icon'/>Recent history</p>*/}
+                        <p className='recent-title'>Recent history</p>
                         <div className='recent-entry'>
-                            {/* <p className='history'><MdHistory className='history-icon'/>History</p> */}
                             <ul>
                                 {conversations.map(conversation => (
-                                    
+
                                     <li className='flex flex-row my-[15px]'>
-                                          <button onClick={() => deleteConversation(conversation.id)} className='btn'>
+                                        <button onClick={() => deleteConversation(conversation.id)} className='btn'>
                                             <MdDeleteOutline className='text-black'/>
                                         </button>
                                         <ul>
@@ -94,7 +94,7 @@ const Sidebar = () => {
                                                 </li>
                                             ))}
                                         </ul>
-                                      
+
                                     </li>
                                 ))}
                             </ul>
@@ -102,7 +102,7 @@ const Sidebar = () => {
                     </div>
                     : null}
             </div>
-            <img src={assets.uir_icon} className='sidebar-image' />
+            <img src={assets.uir_icon} className='sidebar-image'/>
         </div>
     );
 };

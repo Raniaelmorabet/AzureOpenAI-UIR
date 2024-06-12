@@ -1,13 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
 import "./Main.css";
 import Carousel from "../Carousel/Carousel.jsx";
 import { assets } from "../../assets/assets.js";
 import { ClipLoader } from "react-spinners";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { BsStopCircle } from "react-icons/bs";
-import { TypeAnimation } from "react-type-animation";
 import { FaSignInAlt } from "react-icons/fa";
 import {Link} from "react-router-dom";
 

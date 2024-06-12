@@ -1,22 +1,17 @@
-import React, { useState } from "react";
-import "./LoginSignUp.css";
-import { assets } from "../../assets/assets.js";
+import React, {useState} from "react"
+import "./LoginSignUp.css"
+import {assets} from "../../assets/assets.js";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+const LoginSignUp=()=> {
 
-const LoginSignUp = () => {
-    const [action, setAction] = useState("Sign Up");
+    const [action, setAction] =useState("Sign Up");
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     const handleNameChange = ({ target: { value } }) => {
         setName(value);
-    };
-
-    const handleEmailChange = ({ target: { value } }) => {
-        setEmail(value);
     };
 
     const handlePasswordChange = ({ target: { value } }) => {
@@ -29,7 +24,7 @@ const LoginSignUp = () => {
             Password: password,
         };
 
-        const url = 'https://localhost:7043/User/login';
+        const url = 'https://localhost:5182/User/login';
 
         try {
             const result = await axios.post(url, null, { params });
@@ -49,9 +44,9 @@ const LoginSignUp = () => {
         }
     };
 
-    return (
+    return(
         <>
-            <img src={assets.Uirback} className='back-img' alt="Background" />
+            <img src={assets.Uirback} className='back-img'/>
             <div className='Main-container'>
                 <div className='Login-container'>
                     <div className='header'>
@@ -59,39 +54,42 @@ const LoginSignUp = () => {
                         <div className='underline'></div>
                     </div>
                     <div className='inputs'>
-                        {action === "Login" ? null : (
+                        {action === "Login" ? <div></div> :
                             <div className='input'>
-                                <img src={assets.person} alt='person' />
+                                <img src={assets.person} alt='person'/>
                                 <input
-                                    type="text"
-                                    placeholder="Name"
                                     className='focus:outline-none focus:ring-transparent'
+                                    type="text"
+                                    id="txtName"
+                                    placeholder="Enter Name"
                                     onChange={handleNameChange}
                                 />
                             </div>
-                        )}
+                        }
                         <div className='input'>
-                            <img src={assets.email} alt='email' />
+                            <img src={assets.email} alt='email'/>
                             <input
-                                type="email"
-                                placeholder="Email"
                                 className='focus:outline-none focus:ring-transparent'
-                                onChange={handleEmailChange}
+                                type="text"
+                                id="txtName"
+                                placeholder="Enter Name"
+                                onChange={handleNameChange}
                             />
                         </div>
                         <div className='input'>
-                            <img src={assets.password} alt='password' />
+                            <img src={assets.password} alt='password'/>
                             <input
-                                type="password"
-                                placeholder="Password"
                                 className='focus:outline-none focus:ring-transparent'
+                                type="password"
+                                id="txtPassword"
+                                placeholder="Enter Password"
                                 onChange={handlePasswordChange}
                             />
                         </div>
                     </div>
                     <div className='submit-container'>
                         <div className={action === "Login" ? "Submit gray" : "submit"} onClick={() => {
-                            setAction("Sign Up");
+                            setAction("Sign Up")
                         }}>Sign Up
                         </div>
                         <div className={action === "Sign Up" ? "Submit gray" : "submit"} onClick={async () => {
@@ -102,11 +100,16 @@ const LoginSignUp = () => {
                             }
                         }}>Login
                         </div>
+                        {/* <div className={action === "Sign Up" ? "Submit gray" : "submit"} onClick={() => {
+                            setAction("Login")
+                        }}>Login
+                        </div> */}
                     </div>
+                    {/* <button onClick={handleLogin}>Login</button> */}
                 </div>
             </div>
         </>
+
     );
 }
-
-export default LoginSignUp;
+export default LoginSignUp

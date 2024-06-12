@@ -2,7 +2,7 @@
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    background: -webkit-linear-gradient(20deg, rgba(209, 217, 1, 0.47), rgba(0, 0, 255, 0.64));
+    background-color: #183680;
     padding: 25px 15px;
 }
 .message-icon,
@@ -13,6 +13,7 @@
     display: block;
     margin-left: 6px;
     cursor: pointer;
+    color: white;
 }
 .sidebar .new-chat {
     margin-top: 50px;
@@ -33,13 +34,12 @@
 .sidebar .recent-title {
     margin-top: 30px;
     margin-bottom: 20px;
+    color: white;
 }
 .sidebar .recent-entry{
     display: flex;
     align-items: start;
     gap: 10px;
-    /*padding: 10px;*/
-    /*padding-right: 40px;*/
     border-radius: 50px;
     color: #282828;
     cursor: pointer;
@@ -63,8 +63,11 @@
     font-size: 34px;
 }
 .sidebar-image{
-    width: 41px;
+    width: 35px;
     border-radius: 50%;
+    outline: 1px solid white;
+    outline-offset: 5px;
+    margin-left: 3px;
 }
 ul {
     list-style-type: none;

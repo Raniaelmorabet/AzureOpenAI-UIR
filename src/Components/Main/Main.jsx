@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import "./Main.css";
-import Carousel from "../Carousel/Carousel.jsx";
-import { assets } from "../../assets/assets.js";
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { FaSignInAlt } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { FaSignInAlt } from "react-icons/fa";
-import {Link} from "react-router-dom";
+import Carousel from "../Carousel/Carousel.jsx";
+import { assets } from "../../assets/assets.js";
+import "./Main.css";
 
 const Main = () => {
     const [question, setQuestion] = useState('');
@@ -20,8 +20,12 @@ const Main = () => {
     const [generatingResponse, setGeneratingResponse] = useState(false);
     const [typedResponse, setTypedResponse] = useState('');
     const [cardLoading, setCardLoading] = useState(false);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const typingTimeoutRef = useRef(null);
     const conversationEndRef = useRef(null);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const userId = location.state?.userId;
 
     // Function responsible for chat scrolling
     const scrollToBottom = () => {
@@ -33,6 +37,22 @@ const Main = () => {
     useEffect(() => {
         scrollToBottom();
     }, [conversation]);
+
+    useEffect(() => {
+        if (!userId) {
+            // Redirect to login if userId is not available
+            navigate('/');
+        } else {
+            fetch(`https://localhost:5182/Conversation/IdUser/${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    setConversationHistory(data["$values"]);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    }, [userId, navigate]);
 
     const handleInputChange = (e) => {
         setQuestion(e.target.value);
@@ -49,12 +69,11 @@ const Main = () => {
 
         setLoading(true);
         setError(null);
-
         setGeneratingResponse(true);
         await fetchResponse(question);
     };
 
-    // function responsible fot the typeEffect of the responses
+    // function responsible for the typeEffect of the responses
     const typeText = (text) => {
         setTypedResponse('');
         let i = 0;
@@ -82,24 +101,30 @@ const Main = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ question }),
+                body: JSON.stringify({
+                    userId,
+                    conversationId: 0,
+                    userInput: question
+                }),
             });
 
-            const text = await res.text();
+            const data = await res.json();
+            const responseText = data.response;  // Extract the response text
+
             if (!res.ok) {
-                setError(`Error: ${res.statusText} - ${text}`);
+                setError(`Error: ${res.statusText} - ${responseText}`);
                 setLoading(false);
                 return;
             }
 
-            const newEntry = { question, response: text };
+            const newEntry = { question, response: responseText };
             setConversationHistory((prev) => [...prev, newEntry]);
             setShowResult(true);
             setShowCarousel(false);
 
-            typeText(text);
+            typeText(responseText);
 
-            setConversation(prevConversation => [...prevConversation, text]);
+            setConversation(prevConversation => [...prevConversation, responseText]);
             setQuestion('');
         } catch (networkError) {
             setError(`Network error: ${networkError.message}`);
@@ -108,17 +133,10 @@ const Main = () => {
         }
     };
 
-    // function responsible for stopping the response
-    const handleStopResponse = () => {
-        if (typingTimeoutRef.current) {
-            clearTimeout(typingTimeoutRef.current);
-            typingTimeoutRef.current = null;
-        }
-        setGeneratingResponse(false);
-        setTypedResponse(prevTypedResponse => prevTypedResponse);
+    const handleButtonClick = () => {
+        setIsDropdownVisible(!isDropdownVisible);
     };
 
-    // function responsible for the loader in the cards whenever they are clicked
     const handleCardClick = async (card) => {
         setCardLoading(true);
 
@@ -130,24 +148,19 @@ const Main = () => {
             setCardLoading(false);
         }
     };
-    // function responsible for the dropdown of the user Icon
-    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-    const handleButtonClick = () => {
-        setIsDropdownVisible(!isDropdownVisible);
-    }
     return (
         <div className="main">
             <div className="nav flex items-center relative">
                 <p>AzureOpenAI</p>
-                <button className="ml-4" onClick={() => handleButtonClick()}>
-                    <img src={assets.user_icon} alt="User Icon" className="h-10 w-10"/>
+                <button className="ml-4" onClick={handleButtonClick}>
+                    <img src={assets.user_icon} alt="User Icon" className="h-10 w-10" />
                 </button>
                 {isDropdownVisible && (
                     <div className={`drop absolute top-16 mr-8 right-0 bg-white shadow-lg rounded-md z-10`}>
                         <Link to='/LoginSignup'>
-                            <ul className="list-none p-0 px-2 m-0 flex hover:bg-gray-200 hover:rounded-md ">
-                                <FaSignInAlt size={17} className='mt-[14px] text-[#183680]'/>
+                            <ul className="list-none p-0 px-2 m-0 flex hover:bg-gray-200 hover:rounded-md">
+                                <FaSignInAlt size={17} className='mt-[14px] text-[#183680]' />
                                 <button className="p-2 cursor-pointer text-lg text-[#183680]">Sign In</button>
                             </ul>
                         </Link>
@@ -159,10 +172,8 @@ const Main = () => {
                 {!showResult ? (
                     <>
                         <div className='greet text-center'>
-                            <p><span>
-                                Azul, UIR
-                            </span></p>
-                            <p>How can I Assist you today?</p>
+                            <p><span>Azul, UIR</span></p>
+                            <p>How can I assist you today?</p>
                         </div>
                         {error && <p className='error text-red-500'>{error}</p>}
                         {showCarousel && <Carousel handleCardClick={handleCardClick} cardLoading={cardLoading}/>}
@@ -175,19 +186,18 @@ const Main = () => {
                             {conversationHistory.map((convo, index) => (
                                 <div key={index} className='conversation-entry flex flex-col space-y-2'>
                                     <div className='question-title flex items-center space-x-2'>
-                                        <img className='question-img w-10' src={assets.user_icon} alt='User Icon'/>
-                                        <p>You <br/><span>{convo.question}</span></p>
+                                        <img className='question-img w-10' src={assets.user_icon} alt='User Icon' />
+                                        <p>You <br /><span>{convo.question}</span></p>
                                     </div>
                                     <div className='response-data space-x-2'>
-                                        <img src={assets.uir_icon} width={40} className='response-image'
-                                             alt='Response Icon'/>
+                                        <img src={assets.uir_icon} width={40} className='response-image' alt='Response Icon' />
                                         <p>AzureOpenAI <span><ReactMarkdown
                                             remarkPlugins={[remarkGfm]}>{index === conversationHistory.length - 1 && generatingResponse ? typedResponse : convo.response}</ReactMarkdown></span>
                                         </p>
                                     </div>
                                 </div>
                             ))}
-                            <div ref={conversationEndRef}/>
+                            <div ref={conversationEndRef} />
                         </div>
                     }
 
@@ -208,9 +218,9 @@ const Main = () => {
                                 disabled={generatingResponse}
                             >
                                 {generatingResponse ? (
-                                    <ClipLoader color="#183680" size={30}/>
+                                    <ClipLoader color="#183680" size={30} />
                                 ) : (
-                                    <img src={assets.send_icon} alt='Send Icon'/>
+                                    <img src={assets.send_icon} alt='Send Icon' />
                                 )}
                             </button>
                         </div>
@@ -224,6 +234,6 @@ const Main = () => {
             </div>
         </div>
     );
-    };
+};
 
-    export default Main;
+export default Main;

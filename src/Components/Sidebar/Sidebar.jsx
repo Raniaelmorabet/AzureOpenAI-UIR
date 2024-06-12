@@ -87,9 +87,9 @@ const Sidebar = () => {
                             <ul>
                                 {conversations.map(conversation => (
 
-                                    <li className='flex flex-row my-[15px]'>
+                                    <li className='flex flex-row my-[15px] text-white'>
                                         <button onClick={() => deleteConversation(conversation.id)} className='btn'>
-                                            <MdDeleteOutline className='text-black'/>
+                                            <MdDeleteOutline className='text-white'/>
                                         </button>
                                         <ul>
                                             {conversation.questions.$values.map(question => (

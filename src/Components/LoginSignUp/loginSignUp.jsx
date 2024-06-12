@@ -24,7 +24,7 @@ const LoginSignUp=()=> {
             Password: password,
         };
 
-        const url = 'https://localhost:5182/User/login';
+        const url = 'http://localhost:5182/User/login';
 
         try {
             const result = await axios.post(url, null, { params });
@@ -32,7 +32,7 @@ const LoginSignUp=()=> {
             alert(`Success: ${result.data}`);
             const userId = result.data.id;
 
-            navigate('/sidebar', { state: { userId } });
+            navigate('/', { state: { userId } });
         } catch (error) {
             if (error.response) {
                 alert(`Error: ${error.response.status} - ${error.response.data}`);
